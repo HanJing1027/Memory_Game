@@ -3,3 +3,132 @@
 * {
   font-family: "Noto Sans", serif;
 }
+
+body {
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  height          : 100vh;
+  background-color: #CBCBE7;
+}
+
+.wrapper {
+  padding         : 25px;
+  background-color: #FFF;
+  border-radius   : 8px;
+  box-shadow      : 0 0 5px 1px #00000016;
+
+  .cards {
+    display              : grid;
+    gap                  : 20px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cards {
+
+  .card {
+    width           : 150px;
+    height          : 150px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    background-color: #FFF;
+    box-shadow      : 0 0 10px 2px #00000016;
+    border-radius   : 5px;
+    cursor          : pointer;
+
+    .shake {
+      animation: shake .35s ease-in-out;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-13px);
+      }
+
+      40% {
+        transform: translateX(13px);
+      }
+
+      60% {
+        transform: translateX(-8px);
+      }
+
+      80% {
+        transform: translateX(8px);
+      }
+    }
+
+    .view {
+      color              : #CBCBE7;
+      font-size          : 4rem;
+      user-select        : none;
+      pointer-events     : none;
+      backface-visibility: hidden;
+      position           : absolute;
+
+    }
+
+    .back-view {
+      transform: rotateY(-180deg);
+    }
+
+    .flip .front-view {
+      transform: rotateY(180deg);
+    }
+
+    .flip .back-view {
+      transform: rotateY(0);
+    }
+  }
+}
+
+.details {
+  width           : 100%;
+  height          : 60px;
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  margin-top      : 30px;
+  background-color: #FFF;
+  border-radius   : 8px;
+  box-shadow      : 0 0 5px 1px #00000016;
+
+  p {
+    font-size   : 1.25rem;
+    border-right: 1px solid #ccc;
+    padding     : 0 50px;
+
+    span {
+      margin-left: 8px;
+    }
+
+    b {
+      color      : #9797b7;
+      font-weight: 500;
+    }
+  }
+
+  button {
+    cursor          : pointer;
+    color           : #9797b7;
+    background-color: #FFF;
+    border          : 2px solid #9797b7;
+    padding         : 3px 12px;
+    border-radius   : 5px;
+    font-size       : 1.1rem;
+    margin-right    : 50px;
+    transition      : all .03s ease;
+
+    &:active {
+      transform: scale(.95);
+    }
+  }
+}
