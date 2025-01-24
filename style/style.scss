@@ -36,6 +36,8 @@ body {
     background-color: #FFF;
     box-shadow      : 0 0 10px 2px #00000016;
     border-radius   : 5px;
+    perspective     : 1000px; // 啟用 3D 效果
+    position        : relative;
     cursor          : pointer;
 
     .shake {
@@ -67,25 +69,40 @@ body {
     }
 
     .view {
+      backface-visibility: hidden; // 隱藏未正面的內容
+      position           : absolute;
       color              : #CBCBE7;
       font-size          : 4rem;
-      user-select        : none;
-      pointer-events     : none;
-      backface-visibility: hidden;
-      position           : absolute;
+      transition         : all .5s ease;
+    }
 
+    .front-view {
+      background-color: #fff;
+      display         : flex;
+      align-items     : center;
+      justify-content : center;
+      font-size       : 4rem;
+      color           : #CBCBE7;
     }
 
     .back-view {
-      transform: rotateY(-180deg);
+      background-color: #f9f9f9;
+      display         : flex;
+      align-items     : center;
+      justify-content : center;
+      font-size       : 4rem;
+      color           : #CBCBE7;
+      transform       : rotateY(-180deg); // 背面默認翻轉 180 度
     }
 
-    .flip .front-view {
-      transform: rotateY(180deg);
-    }
+    &.flip {
+      .front-view {
+        transform: rotateY(180deg); // 正面翻轉到背面
+      }
 
-    .flip .back-view {
-      transform: rotateY(0);
+      .back-view {
+        transform: rotateY(0); // 背面翻轉到正面
+      }
     }
   }
 }
