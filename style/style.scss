@@ -12,10 +12,76 @@ body {
   background-color: #CBCBE7;
 }
 
+// 結算畫面
+.popup-box {
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  position        : fixed;
+  z-index         : 10;
+  width           : 100%;
+  height          : 100%;
+  background-color: #0000003a;
+
+  .popup {
+    display         : flex;
+    flex-direction  : column;
+    max-width       : 400px;
+    width           : 100%;
+    background-color: #FFF;
+    border-radius   : 8px;
+    box-shadow      : 0 0 5px 1px #00000016;
+    padding         : 15px;
+  }
+}
+
+// 隱藏 and 顯示
+.popup-box {
+  opacity       : 0;
+  pointer-events: none;
+  transition    : all .25s ease;
+
+  &.show {
+    opacity       : 1;
+    pointer-events: all;
+  }
+}
+
+
+.popup {
+
+  .title {
+    text-align : center;
+    font-size  : 1.6rem;
+    font-weight: 500;
+  }
+
+  .info {
+    font-weight: 500;
+    font-size  : 1rem;
+    margin     : 10px 0;
+
+    strong {
+      color    : #9797b7;
+      font-size: 1.1rem;
+    }
+  }
+
+  .close-btn {
+    cursor          : pointer;
+    margin-top      : 15px;
+    font-size       : 1rem;
+    color           : #9797b7;
+    border          : 2px solid #9797b7;
+    background-color: #FFF;
+  }
+}
+
+// 遊戲區塊
 .wrapper {
-  padding         : 25px;
   background-color: #FFF;
   border-radius   : 8px;
+  padding         : 25px;
   box-shadow      : 0 0 5px 1px #00000016;
 
   .cards {
