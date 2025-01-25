@@ -35,7 +35,7 @@ const initGame = () => {
   cards.innerHTML = "";
 
   // 打亂card順序
-  shuffleArray(icons);
+  shuffleArray(cardIcons);
 
   // 渲染卡片到畫面
   cardIcons.forEach((icon) => {
@@ -79,8 +79,15 @@ let isChecking = false;
 
 // 翻牌機制
 const handleCardClick = (card) => {
-  // 如果正常檢查匹配or卡片已經翻開，直接返回
-  if (isChecking || card.getAttribute("flip") == "true") return;
+  // 如果正常檢查匹配 or 已經翻開 or 配對成功 直接返回
+  // 禁止可以選擇同一張兩次
+  if (
+    isChecking ||
+    card.getAttribute("flip") == "true" ||
+    card.classList.contains("matched") ||
+    flipedCards.includes(card)
+  )
+    return;
 
   // 翻牌 & 存入已翻的牌
   card.classList.add("flip");
@@ -101,6 +108,9 @@ const checkMatch = () => {
   const icon2 = card2.querySelector(".back-view i").className;
 
   if (icon1 == icon2) {
+    // 防止匹配成功後可以再配對
+    card1.classList.add("matched");
+    card2.classList.add("matched");
     // 匹配成功
     matchedCards.push(card1, card2);
     // 解鎖
