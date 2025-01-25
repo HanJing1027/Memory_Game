@@ -56,7 +56,7 @@ const initGame = () => {
   });
 
   // 時間限制
-  timeLeft = 30;
+  timeLeft = 40;
   second.textContent = timeLeft;
 
   // 倒計時
@@ -65,13 +65,66 @@ const initGame = () => {
       timeLeft--;
       second.textContent = timeLeft;
     } else {
+      // 時間到停止遊戲
       //
     }
   }, 1000);
 };
 
+// 翻牌相關邏輯變數
+let flipedCards = [];
+let matchedCards = [];
+// 防止連點
+let isChecking = false;
+
+// 翻牌機制
 const handleCardClick = (card) => {
+  // 如果正常檢查匹配or卡片已經翻開，直接返回
+  if (isChecking || card.getAttribute("flip") == "true") return;
+
+  // 翻牌 & 存入已翻的牌
   card.classList.add("flip");
+  flipedCards.push(card);
+
+  // 檢查翻開的兩張牌是否匹配
+  if (flipedCards.length == 2) {
+    // 上鎖
+    isChecking = true;
+    checkMatch();
+  }
+};
+
+// 檢查匹配
+const checkMatch = () => {
+  const [card1, card2] = flipedCards;
+  const icon1 = card1.querySelector(".back-view i").className;
+  const icon2 = card2.querySelector(".back-view i").className;
+
+  if (icon1 == icon2) {
+    // 匹配成功
+    matchedCards.push(card1, card2);
+    // 解鎖
+    isChecking = false;
+    flipedCards = [];
+
+    // 完成挑戰
+    if (matchedCards.length == cardIcons.length) {
+      //
+    }
+  } else {
+    // 錯牌結果
+    setTimeout(() => {
+      card1.classList.add("shake");
+      card2.classList.add("shake");
+      setTimeout(() => {
+        card1.classList.remove("flip", "shake");
+        card2.classList.remove("flip", "shake");
+        flipedCards = [];
+        // 解鎖
+        isChecking = false;
+      }, 500);
+    }, 500);
+  }
 };
 
 refresh.addEventListener("click", initGame);

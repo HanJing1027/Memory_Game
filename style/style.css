@@ -178,9 +178,39 @@ body {
   position: relative;
   cursor: pointer;
 }
-.cards .card .shake {
+.cards .card .view {
+  backface-visibility: hidden;
+  position: absolute;
+  color: #CBCBE7;
+  font-size: 4rem;
+  transition: all 0.5s ease;
+}
+.cards .card .front-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: #CBCBE7;
+}
+.cards .card .back-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: #CBCBE7;
+  transform: rotateY(-180deg);
+}
+.cards .card.flip .front-view {
+  transform: rotateY(180deg);
+}
+.cards .card.flip .back-view {
+  transform: rotateY(0);
+}
+
+.shake {
   animation: shake 0.35s ease-in-out;
 }
+
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
@@ -198,37 +228,6 @@ body {
     transform: translateX(8px);
   }
 }
-.cards .card .view {
-  backface-visibility: hidden;
-  position: absolute;
-  color: #CBCBE7;
-  font-size: 4rem;
-  transition: all 0.5s ease;
-}
-.cards .card .front-view {
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: #CBCBE7;
-}
-.cards .card .back-view {
-  background-color: #f9f9f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: #CBCBE7;
-  transform: rotateY(-180deg);
-}
-.cards .card.flip .front-view {
-  transform: rotateY(180deg);
-}
-.cards .card.flip .back-view {
-  transform: rotateY(0);
-}
-
 .details {
   width: 100%;
   height: 60px;
@@ -242,7 +241,6 @@ body {
 }
 .details p {
   font-size: 1.25rem;
-  border-right: 1px solid #ccc;
   padding: 0 50px;
 }
 .details p span {
