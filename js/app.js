@@ -1,9 +1,15 @@
 const cards = document.querySelector(".cards");
 const refresh = document.querySelector(".refresh");
 const second = document.querySelector(".time b");
+const flips = document.querySelector(".flips b");
+const popup = document.querySelector(".popup-box");
+const popupFlips = document.querySelector(".popup-flips strong");
+const popupTime = document.querySelector(".popup-time strong");
+const closeBtn = document.querySelector(".close-btn");
 
 // 計時器
 let countdown;
+let startTime;
 
 // icon集
 const icons = [
@@ -76,9 +82,15 @@ let flipedCards = [];
 let matchedCards = [];
 // 防止連點
 let isChecking = false;
+// 翻牌次數
+let flipCount = 0;
 
 // 翻牌機制
 const handleCardClick = (card) => {
+  // 記錄翻牌次數
+  flipCount += 1;
+  flips.textContent = flipCount;
+
   // 如果正常檢查匹配 or 已經翻開 or 配對成功 直接返回
   // 禁止可以選擇同一張兩次
   if (
@@ -119,7 +131,7 @@ const checkMatch = () => {
 
     // 完成挑戰
     if (matchedCards.length == cardIcons.length) {
-      //
+      showPopup();
     }
   } else {
     // 錯牌結果
@@ -135,6 +147,22 @@ const checkMatch = () => {
       }, 500);
     }, 500);
   }
+};
+
+// 顯示結算畫面
+const showPopup = () => {
+  // 清空紀錄
+  matchedCards = [];
+
+  popup.classList.add("show");
+  popupFlips.textContent = flipCount;
+  clearInterval(countdown);
+
+  closeBtn.addEventListener("click", () => {
+    popup.classList.remove("show");
+    // 從新計算
+    flipCount = 0;
+  });
 };
 
 refresh.addEventListener("click", initGame);
