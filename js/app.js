@@ -3,6 +3,7 @@ const refresh = document.querySelector(".refresh");
 const second = document.querySelector(".time b");
 const flips = document.querySelector(".flips b");
 const popup = document.querySelector(".popup-box");
+const popupResult = document.querySelector(".result");
 const popupFlips = document.querySelector(".popup-flips strong");
 const popupTime = document.querySelector(".popup-time strong");
 const closeBtn = document.querySelector(".close-btn");
@@ -61,6 +62,9 @@ const initGame = () => {
     card.addEventListener("click", () => handleCardClick(card));
   });
 
+  // 開始時間紀錄
+  startTime = new Date();
+
   // 時間限制
   timeLeft = 40;
   second.textContent = timeLeft;
@@ -71,8 +75,8 @@ const initGame = () => {
       timeLeft--;
       second.textContent = timeLeft;
     } else {
-      // 時間到停止遊戲
-      //
+      popupResult.textContent = "Challenge in the game failed.";
+      showPopup();
     }
   }, 1000);
 };
@@ -87,10 +91,6 @@ let flipCount = 0;
 
 // 翻牌機制
 const handleCardClick = (card) => {
-  // 記錄翻牌次數
-  flipCount += 1;
-  flips.textContent = flipCount;
-
   // 如果正常檢查匹配 or 已經翻開 or 配對成功 直接返回
   // 禁止可以選擇同一張兩次
   if (
@@ -98,8 +98,13 @@ const handleCardClick = (card) => {
     card.getAttribute("flip") == "true" ||
     card.classList.contains("matched") ||
     flipedCards.includes(card)
-  )
+  ) {
     return;
+  }
+
+  // 記錄翻牌次數
+  flipCount += 1;
+  flips.textContent = flipCount;
 
   // 翻牌 & 存入已翻的牌
   card.classList.add("flip");
@@ -131,6 +136,7 @@ const checkMatch = () => {
 
     // 完成挑戰
     if (matchedCards.length == cardIcons.length) {
+      popupResult.textContent = "Challenge in the game succeeded!";
       showPopup();
     }
   } else {
@@ -158,9 +164,14 @@ const showPopup = () => {
   popupFlips.textContent = flipCount;
   clearInterval(countdown);
 
+  // 結束時間紀錄 與 耗時計算
+  let endTime = new Date();
+  let timeSpent = Math.floor((endTime - startTime) / 1000);
+  popupTime.textContent = timeSpent;
+
   closeBtn.addEventListener("click", () => {
     popup.classList.remove("show");
-    // 從新計算
+    // 翻牌次數從新計算
     flipCount = 0;
   });
 };
