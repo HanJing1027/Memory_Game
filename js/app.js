@@ -38,6 +38,10 @@ const initGame = () => {
   // 清空舊的計時器
   clearInterval(countdown);
 
+  // 清空翻牌次數
+  flipCount = 0;
+  flips.textContent = flipCount;
+
   // 清空卡片容易
   cards.innerHTML = "";
 
